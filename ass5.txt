@@ -1,0 +1,100 @@
+/* 
+     PC No:SRKI_054
+     Faculty Name: Nidhi Vaniyawala 
+     Student Name : Utkarsh Patil
+     Roll_No: E17111920310101 
+     Class : SY Bsc CS Sem-4
+     Div : A
+     Date: 02/02/2019
+     Sub : RDBMS-2
+     Assignment: 5
+     Assignment Aim: exlplicit cursors
+     Program Title: 
+*/
+
+
+Q1.Write a PL/SQL block with the use of cursor FOR loop to display the information of EMP table.
+
+
+DECLARE 
+    CURSOR cur_emp IS SELECT EmpNo,EmpName,Design,BasicSalary,DeptId FROM Employee;
+    v_no Employee.EmpNo%TYPE;
+    v_name Employee.EmpName%TYPE;
+    v_design Employee.Design%TYPE;
+    v_salary Employee.BasicSalary%TYPE;
+    v_dept Department.DeptId%TYPE;
+
+BEGIN
+    OPEN cur_emp;
+    FOR I IN 1..6
+    LOOP 
+        FETCH cur_emp INTO v_no,v_name,v_design,v_salary,v_dept;
+        DBMS_OUTPUT.PUT_LINE(v_no);
+        DBMS_OUTPUT.PUT_LINE(v_name);
+        DBMS_OUTPUT.PUT_LINE(v_design);
+        DBMS_OUTPUT.PUT_LINE(v_salary);
+        DBMS_OUTPUT.PUT_LINE(v_dept);
+    END LOOP;
+    CLOSE cur_emp;
+END;
+
+Output : 
+
+106
+Neeraj
+Clerk
+3000
+1
+101
+Utkarsh
+Computer Scientist
+5000
+3
+102
+Ankit
+Manager
+4000
+2
+103
+Ridham
+Manager
+6000
+4
+104
+Harsh
+Graphics Designer
+4500
+3
+105
+Deepak
+Manager
+8200
+1
+
+
+Q2.Write a program using a cursor to display employee information whose name started with ‘R’ and basic salary is more then 5000
+
+DECLARE 
+    CURSOR Display IS SELECT EmpName,BasicSalary FROM Employee WHERE (EmpName LIKE 'R%') AND (BasicSalary>5000);
+
+    v_name Employee.EmpName%TYPE;
+    v_salary Employee.BasicSalary%TYPE;
+
+BEGIN
+    OPEN Display;
+    LOOP
+        FETCH Display INTO v_name,V_salary;
+
+         DBMS_OUTPUT.PUT_LINE(v_name);
+         DBMS_OUTPUT.PUT_LINE(v_salary);
+   
+         EXIT WHEN Display%NOTFOUND;
+    END LOOP;
+    CLOSE Display;
+END;
+
+Output:
+
+Ridham
+6000ss
+

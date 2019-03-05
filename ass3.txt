@@ -1,0 +1,154 @@
+/* 
+     PC No:SRKI_054
+     Faculty Name: Nidhi Vaniyawala 
+     Student Name : Utkarsh Patil
+     Roll_No: E17111920310101 
+     Class : SY Bsc CS Sem-4
+     Div : A
+     Date: 12/01/2018
+     Sub : RDBMS-2
+     Assignment: 3
+     Assignment Aim: Views
+     Program Title: 
+*/
+
+
+Create Table :
+
+Table StudentDetails:
+
+CREATE TABLE StudentDetails (SID NUMBER(3) PRIMARY KEY, Name VARCHAR2(30) , Address VARCHAR2(30));
+
+INSERT INTO StudentDetails VALUES(1,'Harsh','Kolkata');
+
+INSERT INTO StudentDetails VALUES(2,'Ashish','Durgapur');
+
+INSERT INTO StudentDetails VALUES(3,'Pratik','Delhi');
+
+INSERT INTO StudentDetails VALUES(4,'Dhanraj','Bihar');
+
+INSERT INTO StudentDetails VALUES(5,'Ram','Rajasthan');
+
+SID	NAME	ADDRESS
+1	Harsh	Kolkata
+2	Ashish	Durgapur
+3	Pratik	Delhi
+4	Dhanraj	Bihar
+5	Ram	Rajasthan
+
+Table StudentMarks:
+
+CREATE TABLE StudentMarks (SID NUMBER(3) REFERENCES StudentDetails(SID) , Name VARCHAR2(30),Marks VARCHAR2(20) , Age NUMBER(3));
+
+INSERT INTO StudentMarks VALUES(1,'Harsh',90,19);
+
+INSERT INTO StudentMarks VALUES(2,'Suresh',50,20);
+
+INSERT INTO StudentMarks VALUES(3,'Pratik',80,19);
+
+INSERT INTO StudentMarks VALUES(4,'Dhanraj',95,21);
+
+INSERT INTO StudentMarks VALUES(5,'Ram',85,18);
+
+SID	NAME	MARKS	AGE
+1	Harsh	90	19
+2	Suresh	50	20
+3	Pratik	80	19
+4	Dhanraj	95	21
+5	Ram	85	18
+
+Queries:
+
+Q1.create a View named DetailsView from the table StudentDetails.
+
+CREATE VIEW DetailsView AS SELECT * FROM StudentDetails;
+
+SID	NAME	ADDRESS
+1	Harsh	Kolkata
+2	Ashish	Durgapur
+3	Pratik	Delhi
+4	Dhanraj	Bihar
+5	Ram	Rajasthan
+
+Q2.create a view named StudentNames from the table StudentDetails.
+
+CREATE VIEW StudentNames AS SELECT * FROM StudentDetails;
+
+SID	NAME	ADDRESS
+1	Harsh	Kolkata
+2	Ashish	Durgapur
+3	Pratik	Delhi
+4	Dhanraj	Bihar
+5	Ram	Rajasthan
+
+Q3.create a View named MarksView from two tables StudentDetails and StudentMarks
+
+SID
+1
+2
+3
+4
+5
+
+CREATE VIEW MarksView AS SELECT StudentMarks.SID FROM StudentDetails , StudentMarks WHERE StudentDetails.SID = StudentMarks.SID;;
+
+Q4.display result of view.
+
+SELECT * FROM DetailsView;
+
+SID	NAME	ADDRESS
+1	Harsh	Kolkata
+2	Ashish	Durgapur
+3	Pratik	Delhi
+4	Dhanraj	Bihar
+5	Ram	Rajasthan
+
+SELECT * FROM StudentNames;
+
+SID	NAME	ADDRESS
+1	Harsh	Kolkata
+2	Ashish	Durgapur
+3	Pratik	Delhi
+4	Dhanraj	Bihar
+5	Ram	Rajasthan
+
+SELECT * FROM MarksView;
+
+SID
+1
+2
+3
+4
+5
+
+Q5.to update the view MarksView and add the field AGE to this View from StudentMarks Table.
+
+CREATE OR REPLACE VIEW MarksView AS SELECT Marks,Age FROM StudentMarks;
+
+MARKS	AGE
+90	19
+50	20
+80	19
+95	21
+85	18
+
+Q6.insert a row in a View StudentNames.
+
+INSERT INTO StudentNames VALUES('Utkarsh');
+
+Q7.deleting a row from a view  DetailsView first delete the row from the actual table and the change is then reflected. 
+
+DELETE FROM StudentMarks WHERE Name = 'Harsh';
+
+DELETE FROM StudentDetails WHERE Name = 'Harsh';
+
+SID	NAME	ADDRESS
+2	Ashish	Durgapur
+3	Pratik	Delhi
+4	Dhanraj	Bihar
+5	Ram	Rajasthan
+
+Q8.delete or drop a View using the DROP statement
+
+DROP VIEW MarksView;
+

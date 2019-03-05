@@ -1,0 +1,217 @@
+/* 
+     PC No:SRKI_054
+     Faculty Name: Nidhi Vaniyawala 
+     Student Name : Utkarsh Patil
+     Roll_No: E17111920310101 
+     Class : SY Bsc CS Sem-4
+     Div : A
+     Date: 05/01/2018
+     Sub : RDBMS-2
+     Assignment: 2
+     Assignment Aim: Subqueries
+     Program Title: 
+*/
+
+
+---) CREATE TABLE
+
+
+
+CREATE TABLE GEOGRAPHY(Region_Name VARCHAR2(20) NOT NULL,Store_Name VARCHAR2(20) PRIMARY KEY);
+
+
+
+INSERT INTO GEOGRAPHY VALUES('East','Boston');
+
+INSERT INTO GEOGRAPHY VALUES('East','New York');
+
+INSERT INTO GEOGRAPHY VALUES('West','Los Angeles');
+
+INSERT INTO GEOGRAPHY VALUES('East','San Diego');
+
+
+
+
+
+REGION_NAME	STORE_NAME
+
+East	Boston
+
+East	New York
+
+West	Los Angeles
+
+East	San Diego
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE STORE_INFORMATION(Store_Name VARCHAR2(20) REFERENCES GEOGRAPHY(Store_Name),Sales NUMBER(10),Txn_Date DATE);
+
+
+
+INSERT INTO STORE_INFORMATION VALUES('Los Angeles',1500,'Jan-05-1999');
+
+INSERT INTO STORE_INFORMATION VALUES('San Diego',250,'Jan-07-1999');
+
+INSERT INTO STORE_INFORMATION VALUES('Los Angeles',300,'Jan-08-1999');
+
+INSERT INTO STORE_INFORMATION VALUES('Boston',700,'Jan-08-1999');
+
+
+
+
+
+
+
+STORE_NAME	SALES	TXN_DATE
+
+Los Angeles	1500	01/05/1999
+
+San Diego	250	01/07/1999
+
+Los Angeles	300	01/08/1999
+
+Boston	700	01/08/1999
+
+
+
+
+
+
+
+Q1.Write a subquery to find the sales of all stores in the West region.
+
+-->SELECT Sales FROM STORE_INFORMATION WHERE Store_Name IN(SELECT Store_Name FROM GEOGRAPHY WHERE(Region_Name='West'));
+
+SALES
+
+1500
+
+300
+
+
+
+
+
+Q2.Apply following example of correlated query and write result difference. Justify it.
+
+-->SELECT SUM (a1.Sales) FROM STORE_INFORMATION a1
+
+WHERE a1.Store_Name IN
+
+(SELECT Store_Name FROM GEOGRAPHY a2
+
+WHERE a2.Store_Name = a1.Store_Name);
+
+
+
+SUM(A1.SALES)
+
+2750
+
+
+
+
+
+
+
+
+
+Q3.Apply EXISTS and justify your answer:
+
+--)
+
+SELECT SUM(Sales) FROM STORE_INFORMATION
+
+WHERE EXISTS
+
+(SELECT * FROM GEOGRAPHY
+
+WHERE Region_Name = 'West');
+
+
+
+SUM(SALES)
+
+2750
+
+
+
+
+
+Q4.Use group by  to find total sales for each store.
+
+--)SELECT SUM(Sales) FROM STORE_INFORMATION GROUP BY Store_Name;
+
+
+
+SUM(SALES)
+
+250
+
+1800
+
+700
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q5.to find total sales for each product at each store.
+
+--)
+
+SELECT SUM(Sales) FROM STORE_INFORMATION;
+
+
+
+SUM(SALES)
+
+2750
+
+
+
+Q6.To see only the stores with sales over 1,500.[use having clause]
+
+SELECT Store_Name FROM STORE_INFORMATION WHERE Sales>=1500;
+
+STORE_NAME
+
+Los Angeles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,164 @@
+/* 
+     PC No:SRKI_054
+     Faculty Name: Nidhi Vaniyawala 
+     Student Name : Utkarsh Patil
+     Roll_No: E17111920310101 
+     Class : SY Bsc CS Sem-4
+     Div : A
+     Date: 12/01/2018
+     Sub : RDBMS-2
+     Assignment: 4
+     Assignment Aim: implicit cursors
+     Program Title: 
+*/
+
+Create Table :
+
+Department Table:
+
+CREATE TABLE Department (DeptId NUMBER(3) PRIMARY KEY, DeptName VARCHAR2(30));
+
+INSERT INTO Department VALUES(1,'Sale');
+
+INSERT INTO Department VALUES(2,'Management');
+
+INSERT INTO Department VALUES(3,'Computer');
+
+INSERT INTO Department VALUES(4,'Math');
+
+DEPTID	DEPTNAME
+1	Sale
+2	Management
+3	Computer
+4	Math
+
+Employee Table:
+
+CREATE TABLE Employee (EmpNo NUMBER(3) PRIMARY KEY, EmpName VARCHAR2(30) , Design VARCHAR2(30) , BasicSalary NUMBER(5),DeptId NUMBER(3) REFERENCES Department(DeptId));
+
+INSERT INTO Employee VALUES(101,'Utkarsh','Computer Scientist',5000,3);
+
+INSERT INTO Employee VALUES(102,'Ankit','Manager',4000,2);
+
+INSERT INTO Employee VALUES(103,'Ridham','Proffessor',6000,4);
+
+INSERT INTO Employee VALUES(104,'Harsh','Graphics Designer',4500,3);
+
+INSERT INTO Employee VALUES(105,'Deepak','Clerk',8200,1);
+
+
+EMPNO	EMPNAME	DESIGN	BASICSALARY	DEPTID
+101	Utkarsh	Computer Scientist	5000	3
+102	Ankit	Manager	4000	2
+103	Ridham	Proffessor	6000	4
+104	Harsh	Graphics Designer	4500	3
+105	Deepak	Clerk	8200	1
+
+
+Queries:
+
+Q1.Write a program using a cursor to display the name, department name and basic salary of the Item for given Employee id
+
+DECLARE 
+    v_name Employee.EmpName%TYPE;
+    v_deptName Department.DeptName%TYPE;
+    v_salary Employee.BasicSalary%TYPE;
+    v_num Employee.EmpNo%TYPE;
+
+BEGIN
+    v_num:=:Enter_EmoNo;
+    SELECT Employee.EmpName,Employee.BasicSalary,Department.DeptName
+    INTO v_name,v_salary ,v_deptName
+    FROM Employee ,Department 
+    WHERE (Employee.DeptId=Department.DeptId) AND (Employee.EmpNo=v_num);
+ 
+    DBMS_OUTPUT.PUT_LINE('Employee name is ' ||v_name);
+    DBMS_OUTPUT.PUT_LINE('Department name is ' ||v_deptName);
+    DBMS_OUTPUT.PUT_LINE('Basic Salary is ' ||v_salary);
+
+END;
+
+Q2.Write a program that to insert any record into emp table and display the message “ record inserted” if record is insert .[ uses a cursor attribute SQL%NOTFOUND]
+
+DECLARE
+    v_no Employee.EmpNo%TYPE; 
+    v_name Employee.EmpName%TYPE;
+    v_design Employee.Design%TYPE;
+    v_salary Employee.BasicSalary%TYPE;
+    v_deptId Department.DeptId%TYPE;
+
+BEGIN
+    v_no:=:Enter_EmoNo;
+    v_name:=:Enter_EmpName;
+    v_design:=:Enter_Design;
+    v_salary:=:Enter_Salary;
+    v_deptId:=:Enter_DeptId;
+    
+    INSERT INTO Employee VALUES(v_no,v_name,v_design,v_salary,v_deptId);
+    IF SQL%NOTFOUND  THEN
+        DBMS_OUTPUT.PUT_LINE('Inserting fail.');
+    ELSIF
+        DBMS_OUTPUT.PUT_LINE('Insert successful');
+    END IF;
+
+END;
+
+output table:
+    
+EMPNO	EMPNAME	DESIGN	BASICSALARY	DEPTID
+106	Neeraj	Clerk	3000	1
+101	Utkarsh	Computer Scientist	5000	3
+102	Ankit	Manager	4000	2
+103	Ridham	Proffessor	6000	4
+104	Harsh	Graphics Designer	4500	3
+105	Deepak	Clerk	8200	1
+
+
+Q3.Write a program that display total number of records whose employee name is started with ‘R’ character.[Uses a cursor attribute %ROWCOUNT]
+
+DECLARE
+    v_name Employee.EmpName%TYPE;
+    total NUMBER;
+
+BEGIN
+    SELECT COUNT(EmpName) INTO v_name
+    FROM Employee WHERE EmpName LIKE '%R';
+    IF SQL%NOTFOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No data found.');
+    ELSIF SQL%FOUND THEN
+        total := SQL%ROWCOUNT;
+            DBMS_OUTPUT.PUT_LINE(total || ' Employee whose name start with R.');
+    END IF;
+END;
+
+output:
+    
+    1 Employee whose name start with R.
+
+Q4.Write a program that change field designation as ‘manager’ record of those employee whose basic salary is more than 5000.[Use update query] ans display message about ‘Records updated.’
+
+DECLARE 
+    v_design Employee.Design%TYPE;
+    v_salary Employee.BasicSalary%TYPE;
+BEGIN
+    UPDATE Employee
+    SET Design = 'Manager' WHERE BasicSalary > 5000;
+    IF SQL%NOTFOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Update fail.');
+    ELSIF SQL%FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('Update done.');
+    END IF;
+END;
+
+Output : 
+    
+EMPNO	EMPNAME	DESIGN	BASICSALARY	DEPTID
+106	Neeraj	Clerk	3000	1
+101	Utkarsh	Computer Scientist	5000	3
+102	Ankit	Manager	4000	2
+103	Ridham	Manager	6000	4
+104	Harsh	Graphics Designer	4500	3
+105	Deepak	Manager	8200	1
+
+
+

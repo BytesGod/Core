@@ -1,0 +1,148 @@
+/* 
+     PC No:SRKI_054
+     Faculty Name: Nidhi Vaniyawala 
+     Student Name : Utkarsh Patil
+     Roll_No: E17111920310101 
+     Class : SY Bsc CS Sem-4
+     Div : A
+     Date: 29/12/2018
+     Sub : RDBMS-2
+     Assignment: 1
+     Assignment Aim: PL/SQL BLOCKS
+     Program Title: 
+*/
+
+Q1.Write pl/sql which display your name,birth date and contact number.
+
+DECLARE
+    Name VARCHAR2(20);
+    BirthDate DATE;
+    ContactNo NUMBER(11);
+
+
+BEGIN
+    Name := 'Utkarsh';
+    BirthDate := '11-19-1999';
+    ContactNo := 7046121429;
+    
+    DBMS_OUTPUT.PUT_LINE('My name is : '|| Name);
+    DBMS_OUTPUT.PUT_LINE('My Birth Date is : '|| BirthDate);
+    DBMS_OUTPUT.PUT_LINE('My Contact NO is : '|| ContactNo);
+    
+END;
+
+
+Output : 
+
+My name is : Utkarsh
+My Birth Date is : 11/19/1999
+My Contact NO is : 7046121429
+
+----------------------------------------------------------------------------
+
+Q2.Write PL\SQL Block ASSIGN two value A & B from user and display result of  A*B.
+
+DECLARE
+    A NUMBER := 20;
+    B NUMBER := 30;
+    C NUMBER;
+
+BEGIN
+    C := A*B;
+    DBMS_OUTPUT.PUT_LINE('Multiply of A & B is : '|| C);
+    
+END;
+
+Output : 
+
+Multiply of A & B is : 600
+
+---------------------------------------------------------------------------
+
+Q3.Write PL\SQL Block Calculate simple interest calculate to find A, the Final Investment Value, using the simple interest formula: 
+A = PRT/100
+ where P is the Principal amount of money to be invested at an Interest Rate R% per period for T :Number of Time Periods.
+
+DECLARE
+    P NUMBER(10,2) := 2000;
+    R NUMBER(10,2) := 3;
+    T NUMBER(10,2) := 2;
+    A NUMBER(10,2);
+
+BEGIN
+    A := P*R*T/100;
+    DBMS_OUTPUT.PUT_LINE('Simple Interest is : '|| A);
+    
+END;
+
+Output : 
+
+Simple Interest is : 120
+
+-----------------------------------------------------------------------------
+
+Q4.Write a pl/sql code to find cube of a given number.
+
+DECLARE
+    N NUMBER := 10;
+
+BEGIN
+    N := N*N*N;
+    DBMS_OUTPUT.PUT_LINE('Simple Interest is : '|| N);
+    
+END;
+
+Simple Interest is : 1000
+
+----------------------------------------------------------------------------
+
+Q5.Write a PL/SQL block to print smallest number from three different numbers. 
+
+DECLARE
+    N1 NUMBER := 10;
+    N2 NUMBER := 15;
+    N3 NUMBER := 7;
+
+BEGIN
+    IF ((N1 > N2) AND (N3 > N2)) THEN
+        DBMS_OUTPUT.PUT_LINE('Smallest Number is : '|| N2);
+    ELSIF ((N1 < N2) AND (N1 < N3)) THEN
+        DBMS_OUTPUT.PUT_LINE('Smallest Number is : '|| N1);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Smallest Number is : '|| N3);    
+    END IF;
+END;
+
+Output : 
+
+Smallest Number is : 7
+
+----------------------------------------------------------------------------
+
+Q6.Write a PL/SQL block to print middle number from three different numbers.
+
+DECLARE
+    N1 NUMBER := 10;
+    N2 NUMBER := 15;
+    N3 NUMBER := 7;
+
+BEGIN
+    IF ((N1 < N2) AND (N1 > N3)) THEN
+        DBMS_OUTPUT.PUT_LINE('Middle Number is : '|| N1);
+    ELSIF ((N2 < N1) AND (N2 > N3)) THEN
+        DBMS_OUTPUT.PUT_LINE('Middle Number is : '|| N2);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Middle Number is : '|| N3);    
+    END IF;
+END;
+
+
+Output :
+
+Middle Number is : 10
+
+-------------------------------------------------------------------------------
+
+Q7.Write a pl/SQL block which identify a person is eligible for voting in election or not. [Hint: if a person is male and age is 21 then he is eligible. If a person is female and age is 18 then she is eligible.]
+
+
