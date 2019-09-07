@@ -94,27 +94,97 @@ namespace EMS
 
         protected void btnSRegistration_Click(object sender, EventArgs e)
         {
-            string ConnectionString = ConfigurationManager.ConnectionStrings["EMSConnectionString"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            if (Page.IsValid)
             {
-                SqlCommand cmd = new SqlCommand("spRegisterUser", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+                HttpPostedFile postedFile = fupSImage.PostedFile;
+                string filename = Path.GetFileName(postedFile.FileName);
+                string fileExtension = Path.GetExtension(filename);
+                int fileSize = postedFile.ContentLength;
 
-                cmd.Parameters.AddWithValue("@FName", txtSFName.Text);
-                cmd.Parameters.AddWithValue("@LName", txtSLName.Text);
-                cmd.Parameters.AddWithValue("@Username", txtSUsername.Text);
-                cmd.Parameters.AddWithValue("@Password", txtSPass.Text);
-                cmd.Parameters.AddWithValue("@Email", txtSEmail.Text);
-                cmd.Parameters.AddWithValue("@Mobile", txtSMobile.Text);
-                cmd.Parameters.AddWithValue("@GraduationType", ddlUserType.SelectedItem.Text);
-                cmd.Parameters.AddWithValue("@Course", ddlSCourse.SelectedItem.Text);
-                cmd.Parameters.AddWithValue("@Class", ddlSClass.SelectedItem.Text);
-                cmd.Parameters.AddWithValue("@DOB", txtSDOB.Text);
+                if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".gif"
+                    || fileExtension.ToLower() == ".png" || fileExtension.ToLower() == ".bmp")
+                {
+                    if (fileSize < 2097152)
+                    {
+                        Stream stream = postedFile.InputStream;
+                        BinaryReader binaryReader = new BinaryReader(stream);
+                        Byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
 
-                con.Open();
-                cmd.ExecuteNonQuery();
+                        string ConnectionString = ConfigurationManager.ConnectionStrings["EMSConnectionString"].ConnectionString;
+                        using (SqlConnection con = new SqlConnection(ConnectionString))
+                        {
+                            SqlCommand cmd = new SqlCommand("spRegisterUser", con);
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-                lblMeassage.Text = "Insert Successfully.";
+                            cmd.Parameters.AddWithValue("@FName", txtSFName.Text);
+                            cmd.Parameters.AddWithValue("@LName", txtSLName.Text);
+                            cmd.Parameters.AddWithValue("@Username", txtSUsername.Text);
+                            cmd.Parameters.AddWithValue("@Password", txtSPass.Text);
+                            cmd.Parameters.AddWithValue("@Email", txtSEmail.Text);
+                            cmd.Parameters.AddWithValue("@Mobile", txtSMobile.Text);
+                            cmd.Parameters.AddWithValue("@GraduationType", ddlUserType.SelectedItem.Text);
+                            cmd.Parameters.AddWithValue("@Course", ddlSCourse.SelectedItem.Text);
+                            cmd.Parameters.AddWithValue("@Class", ddlSClass.SelectedItem.Text);
+                            cmd.Parameters.AddWithValue("@DOB", txtSDOB.Text);
+
+                            SqlParameter paramImageName = new SqlParameter()
+                            {
+                                ParameterName = @"ImageName",
+                                Value = filename
+                            };
+                            cmd.Parameters.Add(paramImageName);
+
+                            SqlParameter paramSize = new SqlParameter()
+                            {
+                                ParameterName = "@Size",
+                                Value = fileSize
+                            };
+                            cmd.Parameters.Add(paramSize);
+
+                            SqlParameter paramImageData = new SqlParameter()
+                            {
+                                ParameterName = "@ImageData",
+                                Value = bytes
+                            };
+
+                            cmd.Parameters.Add(paramImageData);
+
+                            con.Open();
+
+
+                            int ReturnCode = (int)cmd.ExecuteScalar();
+                            if (ReturnCode == -1)
+                            {
+                                lblMessage.Text = "User Name already in use, please choose another user name";
+                            }
+                            else
+                            {
+                                cmd.ExecuteNonQuery();
+                                MailMessage mailMessage = new MailMessage("codewithprogrammer@gmail.com", txtSEmail.Text);
+
+                                mailMessage.Body = "Hello, " + txtSFName.Text + " " + txtSLName.Text + "\n\tYou are successfully registration on E mentoring system.\n\nWith Regards,\ncodewithprogrammer.";
+
+                                mailMessage.Subject = "E Mentoring System Registration";
+
+                                SmtpClient smtpClient = new SmtpClient();
+
+                                smtpClient.Send(mailMessage);
+
+                                lblMessage.Text = "Insert Successfully and check your Email.";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lblMessage.ForeColor = Color.Red;
+                        lblMessage.Text = "Image size more than 2 MB not allowed.";
+                    }
+                }
+                else
+                {
+                    lblMessage.ForeColor = Color.Green;
+                    lblMessage.Text = "Image file not having .png, .jpg, .bmp, .gif extension.";
+                }
             }
         }
     }
