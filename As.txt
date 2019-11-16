@@ -1,0 +1,1051 @@
+import java.util.*;
+
+public class ass1_1 {
+        public static void main(String args[]){
+            int m, year, week, day;
+            Scanner s = new Scanner(System.in);
+            System.out.print("Enter the number of days:");
+            m = s.nextInt();
+            year = m / 365;
+            m = m % 365;
+            System.out.println("No. of years:"+year);
+            week = m / 7;
+            m = m % 7;
+            System.out.println("No. of weeks:"+week);
+            day = m;
+            System.out.println("No. of days:"+day);
+    }
+    
+}
+
+
+
+import java.util.*;
+
+public class ass1_2 {
+    public static void main(String args[]) throws Exception {
+      String str = "sampleString";
+      int i = 0;
+      for(char c: str.toCharArray()) {
+         i++;
+      }
+      System.out.println("Length of the given string ::"+i);
+      for (int j=0;j<i/2;j++)
+      {
+          System.out.print(str.charAt(j));
+      }
+   }
+    
+}
+
+
+import java.util.*;
+ 
+public class ass1_3 {
+ 
+    private static Scanner scanner = new Scanner( System.in );
+ 
+    public static void main(String[] args) {
+ 
+        System.out.println("Enter max number: ");
+ 
+        String input = scanner.nextLine();
+        int maxNumber = Integer.parseInt( input );
+ 
+        System.out.println("List of the prime number between 1 - " + maxNumber);
+ 
+        for (int num = 2; num <= maxNumber; num++)
+        {
+            boolean isPrime = true;
+            for (int i=2; i <= num/2; i++)
+            {
+                if ( num % i == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
+            }
+ 
+            if ( isPrime == true )
+                System.out.println(num);
+        }
+    }
+}
+
+
+import java.util.*;
+
+public class ass2_1 { 
+  
+    static String convert(String str) 
+    { 
+  
+        // Create a char array of given String 
+        char ch[] = str.toCharArray(); 
+        for (int i = 0; i < str.length(); i++) { 
+  
+            // If first character of a word is found 
+            if (i == 0 && ch[i] != ' ' ||  
+                ch[i] != ' ' && ch[i - 1] == ' ') { 
+  
+                // If it is in lower-case 
+                if (ch[i] >= 'a' && ch[i] <= 'z') { 
+  
+                    // Convert into Upper-case 
+                    ch[i] = (char)(ch[i] - 'a' + 'A'); 
+                } 
+            } 
+  
+            // If apart from first character 
+            // Any one is in Upper-case 
+            else if (ch[i] >= 'A' && ch[i] <= 'Z')  
+  
+                // Convert into Lower-Case 
+                ch[i] = (char)(ch[i] + 'a' - 'A');             
+        } 
+  
+        // Convert the char array to equivalent String 
+        String st = new String(ch); 
+        return st; 
+    } 
+  
+    public static void main(String[] args) 
+    { 
+        String str = "gEEks fOr GeeKs"; 
+        System.out.println(convert(str)); 
+    } 
+} 
+    
+
+
+
+import java.util.*;
+
+public class ass2_2 {
+        public static void main(String[] args) 
+
+    {
+
+        int n, sum = 0;
+
+        Scanner s = new Scanner(System.in);
+
+        System.out.print("Enter no. of elements you want in array:");
+
+        n = s.nextInt();
+
+        int a[] = new int[n];
+
+        System.out.println("Enter all the elements:");
+
+        for(int i = 0; i < n; i++)
+
+        {
+
+            a[i] = s.nextInt();
+
+            sum = sum + a[i];
+
+        }
+
+        System.out.println("Sum:"+sum);
+
+    }
+    
+}
+
+
+import java.util.*; 
+import java.io.*; 
+
+ public class ass2_3 {
+ public static void main(String[] args)
+ {
+   String string1 = "Python";
+    int slength = 3;
+    if (slength > string1.length()) {
+      slength = string1.length();
+    }
+
+    String subpart = string1.substring(string1.length()-3);
+    System.out.println(subpart + string1 + subpart);
+  }
+}
+
+
+    import java.util.*;
+
+    public class ass2_4 
+
+    {
+
+        public static void main(String[] args) 
+
+        {
+
+            int n, temp;
+
+            Scanner s = new Scanner(System.in);
+
+            System.out.print("Enter no. of elements you want in array:");
+
+            n = s.nextInt();
+
+            int a[] = new int[n];
+
+            System.out.println("Enter all the elements:");
+
+            for (int i = 0; i < n; i++) 
+
+            {
+
+                a[i] = s.nextInt();
+
+            }
+
+            for (int i = 0; i < n; i++) 
+
+            {
+
+                for (int j = i + 1; j < n; j++) 
+
+                {
+
+                    if (a[i] > a[j]) 
+
+                    {
+
+                        temp = a[i];
+
+                        a[i] = a[j];
+
+                        a[j] = temp;
+
+                    }
+
+                }
+
+            }
+
+            System.out.print("Ascending Order:");
+
+            for (int i = 0; i < n - 1; i++) 
+
+            {
+
+                System.out.print(a[i] + ",");
+
+            }
+
+            System.out.print(a[n - 1]);
+
+        }
+
+    }
+
+
+    import java.util.*;
+
+    public class ass2_5
+
+    {
+
+        public static void main(String[] args) 
+
+        {
+
+            int n, temp;
+
+            Scanner s = new Scanner(System.in);
+
+            System.out.print("Enter no. of elements you want in array(Minimum 2):");
+
+            n = s.nextInt();
+
+            int a[] = new int[n];
+
+            System.out.println("Enter all the elements:");
+
+            for (int i = 0; i < n; i++) 
+
+            {
+
+                a[i] = s.nextInt();
+
+            }
+
+            for (int i = 0; i < n; i++) 
+
+            {
+
+                for (int j = i + 1; j < n; j++) 
+
+                {
+
+                    if (a[i] > a[j]) 
+
+                    {
+
+                        temp = a[i];
+
+                        a[i] = a[j];
+
+                        a[j] = temp;
+
+                    }
+
+                }
+
+            }
+
+            System.out.println("Second Largest:"+a[n-2]);
+
+            System.out.println("Smallest:"+a[0]);
+
+        }
+
+    }
+
+
+
+import java.util.*;
+public class ass2_6
+{
+    public static void main(String[] args) 
+    {
+        int n;
+        String temp;
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter number of names you want to enter:");
+        n = s.nextInt();
+        String names[] = new String[n];
+        Scanner s1 = new Scanner(System.in);
+        System.out.println("Enter all the names:");
+        for(int i = 0; i < n; i++)
+        {
+            names[i] = s1.nextLine();
+        }
+        for (int i = 0; i < n; i++) 
+        {
+            for (int j = i + 1; j < n; j++) 
+            {
+                if (names[i].compareTo(names[j])>0) 
+                {
+                    temp = names[i];
+                    names[i] = names[j];
+                    names[j] = temp;
+                }
+            }
+        }
+        System.out.print("Names in Sorted Order:");
+        for (int i = 0; i < n - 1; i++) 
+        {
+            System.out.print(names[i] + ",");
+        }
+        System.out.print(names[n - 1]);
+    }
+}
+
+
+
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+public class ass2_7 {
+    public static void main(String args[]){
+       try
+       {
+            Scanner take = new Scanner(System.in);
+            String s;
+            int l;
+            System.out.println("Enter the String : ");
+            s = take.nextLine();
+            l = s.length();
+            for(int i=0; i<l;i++)
+            {
+                for(int j=0; j<l-(i+1); j++)
+                {
+                    System.out.print(" ");
+                }
+
+                for(int j=0;j<i;j++)
+                {
+                    System.out.printf("%c ",s.charAt(j));
+                }
+                System.out.printf("%c\n",s.charAt(i));
+            }     
+       }
+       catch(Exception e)
+       {
+           System.err.println(e);
+       }
+    }
+}
+
+
+
+import java.util.*;
+
+abstract class StackClass{
+    abstract void push(int i);
+    abstract int pop();
+    abstract void display();
+}
+
+class Test extends StackClass{
+    private int arr[];
+    private int top, size, len;
+    
+    public Test(int n)
+    {
+        size = n;
+        len = 0;
+        arr = new int[size];
+        top = -1;
+    }
+    
+    private boolean isEmpty()
+    {
+        return top == -1;
+    }
+    
+    public void push(int i)
+    {
+        if(top + 1 >= size)
+            throw new IndexOutOfBoundsException("Overflow Exception");
+        if(top + 1 < size )
+            arr[++top] = i;
+        len++ ;
+    }
+    
+    public int pop()
+    {
+        if( isEmpty() )
+            throw new NoSuchElementException("Underflow Exception");
+        len-- ;
+        return arr[top--]; 
+    }    
+    
+    public void display()
+    {
+        System.out.print("\nStack = ");
+        if (len == 0)
+        {
+            System.out.print("Empty\n");
+            return ;
+        }
+        for (int i = top; i >= 0; i--)
+            System.out.print(arr[i]+" ");
+        System.out.println();
+    }
+}
+
+public class ass4_1 {
+    public static void main(String args[]){
+        Scanner take = new Scanner(System.in);  
+        System.out.println("Enter Size of Integer Stack ");
+        int n = take.nextInt();
+        Test obj = new Test(n);
+        
+        char ch;
+        do{
+            System.out.println("\nStack Operations");
+            System.out.println("1. push");
+            System.out.println("2. pop");
+            System.out.println("3. display");
+            System.out.println("4. exit");
+        
+            int choice = take.nextInt();
+            switch (choice)
+            {
+                case 1 : 
+                    System.out.println("Enter integer element to push");
+                    try 
+                    {
+                        obj.push( take.nextInt() );
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("Error : " + e.getMessage());
+                    }   
+                    break;
+                    
+                case 2 : 
+                    try
+                    {
+                        System.out.println("Popped Element = " + obj.pop());
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("Error : " + e.getMessage());
+                    }    
+                    break; 
+                    
+                case 3 :         
+                    obj.display();
+                    break; 
+                    
+                case 4 : 
+                    break;
+                    
+                default :
+                    System.out.println("Invalid choice.");
+                    break;
+            }
+          
+            System.out.println("\nDo you want to continue (Type y or n) \n");
+            ch = take.next().charAt(0);
+        }while(ch == 'Y'|| ch == 'y');
+    }  
+}
+
+
+
+import java.util.*;
+
+abstract class Shape
+{
+    abstract void area();
+}
+
+class Triangle extends Shape
+{
+    void area()
+    {
+        Scanner take= new Scanner(System.in);
+        
+        System.out.println("Enter the width of the Triangle:");
+        double b = take.nextDouble();
+ 
+        System.out.println("Enter the height of the Triangle:");
+        double h = take.nextDouble();
+ 
+       double area = (b*h)/2;
+       System.out.println("Area of Triangle is: " + area);
+    }
+}
+
+class Rectangle extends Shape
+{
+    void area()
+    {
+        Scanner take= new Scanner(System.in);
+        
+        System.out.println("Enter the length:");
+        double l = take.nextDouble();
+        
+        System.out.println("Enter the breadth:");
+        double b = take.nextDouble();
+  
+        double  area = l*b;
+        System.out.println("Area of Rectangle is: " + area);  
+    }
+}
+
+class Circle extends Shape
+{
+    void area()
+    {
+        int r;
+        double pi = 3.14, area;
+        
+        Scanner take = new Scanner(System.in);
+        System.out.print("Enter radius of circle:");
+        r = take.nextInt();
+        area = pi * r * r;
+        System.out.println("Area of circle:"+area);
+    }
+}
+
+public class ass4_2 {
+    public static void main(String args[]){
+        Triangle Tri = new Triangle();
+        Rectangle Rect = new Rectangle();
+        Circle Cir = new Circle();
+        Tri.area();
+        Rect.area();
+        Cir.area();
+    }
+}
+
+
+
+import nameSorting.sorting;
+
+public class ass5_2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        nameSorting.sorting d = new nameSorting.sorting();
+        d.sorts();  
+    }
+    
+}
+
+
+import java.util.*;
+
+public class ass6_1 {
+    public static void main(String[] args) {
+        try{
+            Scanner take = new Scanner(System.in);
+            int a,b,n;
+            System.out.println("Enter the number first number :");
+            a = take.nextInt();
+            System.out.println("Enter the number second number :");
+            b = take.nextInt();
+            n = a/b;
+            System.out.println("Number " + a + " divided by " + b);
+            System.out.println("Result : " + n);
+        }catch(Exception e){
+            System.out.println("Caught Exception while trying to divide 100 by zero : "+ e.toString());
+        }
+    }
+}
+
+
+    
+import java.util.*;
+     
+class AgeException extends Exception {
+    public AgeException(String str) {
+      System.out.println(str);
+    }
+}
+
+public class ass6_2 {
+    public static void main(String[] args) {
+    Scanner take = new Scanner(System.in);
+    System.out.print("Enter your age : ");
+    int age = take.nextInt();
+      
+    try {
+        if(age < 18) 
+            throw new AgeException("Invalid age exception");
+        else
+            System.out.println("Registration successfully done");
+        }
+        catch (AgeException a) {
+            System.out.println(a);
+        }
+    }
+}
+
+
+
+import java.util.*;
+
+class Bank
+{
+    float fund;
+    void deposit(float amount)
+    {
+        fund=amount;
+    }
+    void withdraw(float money) throws Exception
+    {
+        float newFund=fund-money;
+        if(newFund < 500)
+        {
+            throw new Exception("Not Sufficient Fund");
+        }
+        else
+        {
+            fund = newFund;
+            System.out.println("Balance After Withdraw : " + fund);
+        }
+    }
+        public static void main(String arg[])
+        {
+            Bank b = new Bank();
+            b.deposit(1000.00f);
+            try
+            {
+                float money;
+                Scanner sc=new Scanner(System.in);
+                System.out.println("Enter Your Amount for withdraw : ");
+                money=sc.nextInt();
+                System.out.println("Withdrawing amount : " + money);
+                b.withdraw(money);
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+            
+        }
+}
+
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Exam;
+
+import java.util.Date;
+import java.util.Scanner;
+
+/**
+ *
+ * @author utkar
+ */
+public class Exam {
+    public static void main(String args[]){
+        
+    }
+        public String name, course;
+        public int marks[] = new int[5];
+    public int roll;
+    public String admDate;
+    public static int studentCount = 0;;
+
+    public static void studentNumber()
+    {
+        System.out.println("Number of students admitted : " + studentCount);
+    }
+    public int getRoll() {
+        return roll;
+    }
+
+    public void admission() {
+        Scanner take = new Scanner(System.in);
+        Date date = new Date();
+        System.out.println("STUDENT  DETAILS\n");
+        System.out.println("\nEnter name: ");
+        name = take.nextLine();
+        System.out.println("\nEnter course name: ");
+        course = take.nextLine();
+        admDate = date.toString();
+        System.out.println("Admission Date:" + admDate);
+        studentCount++;
+        roll = studentCount;
+        System.out.println("Roll: "+ roll);
+
+    }
+
+    public void getMarks() {
+        Scanner take = new Scanner(System.in);
+        boolean flag;
+        for (int i = 0; i < 5;) {
+            flag = true;
+            do{
+                if(!flag){
+                    System.out.println("Wrong input.");
+                }
+                System.out.println("Enter marks in subject " + (i + 1) + ":");
+                marks[i] = take.nextInt();
+
+                flag = false;
+            }while((marks[i] > 100) || (marks[i] < 0) );
+
+            i++;
+
+        }
+
+
+    }
+
+    public void Marksheet() {
+        int j;
+        System.out.println("STUDENT DETAILS");
+        System.out.println("NAME               : " + name);
+        System.out.println("ROLL NUMBER        : " + roll);
+        System.out.println("COURSE             : " + course);
+        System.out.println("ADMISSION DATE     : " + admDate);
+        for (j = 0; j < 5; j++){
+            System.out
+                    .println("MARKS IN SUBJECT " + (j + 1) + " : " + marks[j]);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAdmissionDate() {
+        return admDate;
+    }
+    
+}
+
+
+
+package Students;
+import Exam.Exam;
+import static java.lang.Thread.sleep;
+
+import java.util.*;
+
+public class ass5_1 {
+public static void main(String[] args) throws InterruptedException {
+    Scanner take = new Scanner(System.in);
+    int size;
+    System.out.println("\nEnter the maximum number of student:");
+    size = take.nextInt();
+    int i = 0;
+    boolean flag = false;
+    Exam list[] = new Exam[size];
+    char choice;
+    while (!flag) {
+        System.out
+                .println("\n\n*******************Student Admission********************\n");
+        System.out.println("1. Admission");
+        System.out.println("2. Enter marks");
+        System.out.println("3. Display marksheet");
+        System.out.println("4. Total number of students");
+        System.out.println("6. Exit");
+        System.out.println("Enter choice: ");
+        choice = take.next().charAt(0);
+        switch (choice) {
+        case '1':
+            if (i >= size) {
+                System.out.println("Maximum student capacity reached");
+                break;
+            }
+            list[i] = new Exam();
+            list[i].admission();
+            list[i].getMarks();
+            i++;
+            break;
+        case '2': {
+            int j, k;
+            System.out
+                    .println("Enter the student roll number whose marksheet is to be prepared: ");
+            k = take.nextInt();
+            for (j = 0; j < Exam.studentCount; j++) {
+                if (list[j].getRoll() == k) {
+                    list[j].getMarks();
+                    break;
+                }
+            }
+            if (j == Exam.studentCount)
+                System.out.println("Student not admitted yet\n");
+            break;
+        }
+        case '3': {
+            int j, k;
+            System.out
+                    .println("Enter the student roll number whose marksheet is to be displayed: ");
+            k = take.nextInt();
+            for (j = 0; j < Exam.studentCount; j++) {
+                if (list[j].getRoll() == k) {
+                    list[j].Marksheet();
+                    sleep(1000);
+                    break;
+                }
+            }
+            if (j == Exam.studentCount)
+                System.out.println("Student not admitted yet\n");
+            sleep(1000);
+
+            break;
+        }
+        case '4':
+            System.out.println("Total students: ");
+            Exam.studentNumber();
+            sleep(1000);
+            break;
+        case '6':
+            System.out.println("Thank You");
+            flag = true;
+            sleep(1000);
+            break;
+        default:
+            System.out.println("\nInvalid choice");
+        }
+    }
+    take.close();
+    }
+}
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package nameSorting;
+import studentName.insertStudent;
+
+/**
+ *
+ * @author utkar
+ */
+import java.util.Scanner;
+
+public class sorting {
+
+   public void sorts(){
+       insertStudent d = new insertStudent();
+       d.insert();
+    }
+    
+
+
+    public static void main(String[] args) {
+        
+    }
+    
+}
+
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package studentName;
+import java.util.*;
+
+public class insertStudent {
+public void insert(){
+        int n;
+        String temp;
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter number of names you want to enter:");
+        n = s.nextInt();
+        String names[] = new String[n];
+        Scanner s1 = new Scanner(System.in);
+        System.out.println("Enter all the names:");
+        for(int i = 0; i < n; i++)
+        {
+            names[i] = s1.nextLine();
+        }
+        for (int i = 0; i < n; i++) 
+        {
+            for (int j = i + 1; j < n; j++) 
+            {
+                if (names[i].compareTo(names[j])>0) 
+                {
+                    temp = names[i];
+                    names[i] = names[j];
+                    names[j] = temp;
+                }
+            }
+        }
+        System.out.print("Names in Sorted Order:");
+        for (int i = 0; i < n - 1; i++) 
+        {
+            System.out.print(names[i] + ",");
+        }
+        System.out.print(names[n - 1]);
+}
+    public static void main(String[] args) {
+        
+    }
+    
+}
+
+
+package ass7;
+import java.util.*;
+
+
+public class ass7_1
+{
+   public static void main(String args[])
+   {
+        int ci, i, j, k, l=0;
+        String str, str1;
+        char c, ch;
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.print("Enter a String : ");
+        str=scan.nextLine();
+        
+        i=str.length();
+        for(c='A'; c<='z'; c++)
+        {
+            k=0;
+            for(j=0; j<i; j++)
+            {
+                ch = str.charAt(j);
+                if(ch == c)
+                {
+                    k++;
+                }
+            }
+            if(k>0)
+            {
+                System.out.println("The character " + c + " has occurred for " + k + " times");
+            }
+        }
+   }
+}
+
+
+package ass7;
+
+/**
+ *
+ * @author srki-035
+ */
+public class ass7_2
+{
+     public static void main(String args[])
+    {
+   
+    
+      int x[]=new int[100];
+       int sum=0;
+        double avg=0;
+       
+        for(int i=0;i<args.length;i++)
+        {          
+            x[i]=Integer.parseInt(args[i]);
+           sum+=x[i];
+        }
+        
+        
+        
+        System.out.println("addition :"+sum);
+        System.out.println("Average : "+((sum)/(args.length)));
+        
+    }
+    
+}
+
+
+package ass7;
+
+/**
+ *
+ * @author srki-035
+ */
+public class ass7_3 {
+  
+    public static void main(String args[])
+    {
+        int s2=Integer.parseInt(args[0]);
+        int s3=Integer.parseInt(args[1]);
+
+        String s="";
+        int num=0;
+        for(int i=s2;i<s3;i++)
+        {
+            int c=0;
+            for(num=i;num>=1;num--)
+            {
+                if(i%num==0)
+                {
+                    c+=1;
+                }
+            }
+            if(c==2)
+            {
+                s=s+i+" ";
+            }
+
+        }
+   
+        System.out.println("prime numbers are :" +s);
+
+    }
+}
