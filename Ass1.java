@@ -9,8 +9,8 @@ class Database
 {
     Connection con = null;
     public static int port;
-    public String database;
-    public boolean IsChecked = false;
+    public static String database;
+    public static boolean IsChecked = false;
     
     public void CreateDatabase() throws IOException
     {
@@ -43,7 +43,7 @@ class Database
                 System.out.println("Database created.");
                 System.out.println("Creating table now.");
                 
-                String query2 = "create or alter table `student` (`ID` int(3) not null,`Name` varchar(50) not null)";
+                String query2 = "create table if not exists `student` (`ID` int(3) not null,`Name` varchar(50) not null)";
                 
                 con = DriverManager.getConnection(DbUrl2,Username,Password);
                 
@@ -98,7 +98,7 @@ class Database
         catch(SQLException ex)
         {
             System.out.println("Error In Connect to Database : " + ex);
-            IsChecked = false;
+            //IsChecked = false;
             System.in.read();
         }
     }
@@ -111,7 +111,7 @@ class Crud
     
     public void Connect()
     {
-        if(Database.IsChecked == true)
+        if(Database.IsChecked)
         {
             try
             {
@@ -133,7 +133,7 @@ class Crud
     
     public void select() throws IOException
     {
-        if(Database.IsChecked == true)
+        if(Database.IsChecked)
         {
             this.Connect();
             String query = "select * from student";
@@ -149,6 +149,9 @@ class Crud
                 
                     System.out.println(id + " " + name);
                 }
+                st.close();
+                con.close();
+                System.in.read();
             }
             catch(Exception ex)
             {
@@ -165,7 +168,7 @@ class Crud
     
     public void Insert() throws IOException
     {
-        if(Database.IsChecked == true)
+        if(Database.IsChecked)
         {
             this.Connect();
             String query = "insert into student values(?,?)";
@@ -174,17 +177,18 @@ class Crud
             String name;
         
             Scanner take = new Scanner(System.in);
+            Scanner take2 = new Scanner(System.in);
         
             System.out.println("Please enter the ID : ");
             id = take.nextInt();
             System.out.println("Plase enter name : ");
-            name = take.nextLine();
+            name = take2.nextLine();
         
             try(PreparedStatement st = con.prepareStatement(query);)
             {
                 st.setInt(1,id);
                 st.setString(2, name);
-                int count = st.executeUpdate(); //executeUpdate() used for DML
+                int count = st.executeUpdate();
             
                 if(count > 0)
                 {
@@ -206,11 +210,97 @@ class Crud
             System.in.read();
         }
     }
+    
+    public void Update() throws IOException
+    {
+        if(Database.IsChecked)
+        {
+            this.Connect();
+            String query = "update student set Name = ? where ID = ?";
+        
+            int id;
+            String name;
+        
+            Scanner take = new Scanner(System.in);
+            Scanner take2 = new Scanner(System.in);
+        
+            System.out.println("Please enter the ID : ");
+            id = take.nextInt();
+            System.out.println("Plase enter name : ");
+            name = take2.nextLine();
+        
+            try(PreparedStatement st = con.prepareStatement(query);)
+            {
+                st.setInt(2,id);
+                st.setString(1, name);
+                int count = st.executeUpdate();
+            
+                if(count > 0)
+                {
+                    System.out.println(count + " row/s affected Updated Successfully.");
+                }   
+                st.close();
+                con.close();
+                System.in.read();
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Error In Update : " + ex);
+                System.in.read();
+            }
+        }
+        else
+        {
+            System.out.println("Please Connect to Database.");
+            System.in.read();
+        }
+    }
+    
+    public void Delete() throws IOException
+    {
+        if(Database.IsChecked)
+        {
+            this.Connect();
+            String query = "delete from student where ID = ?";
+        
+            int id;
+        
+            Scanner take = new Scanner(System.in);
+        
+            System.out.println("Please enter the ID : ");
+            id = take.nextInt();
+        
+            try(PreparedStatement st = con.prepareStatement(query);)
+            {
+                st.setInt(1,id);
+                int count = st.executeUpdate();
+            
+                if(count > 0)
+                {
+                    System.out.println(count + " row/s affected Deleted Successfully.");
+                }   
+                st.close();
+                con.close();
+                System.in.read();
+            }
+            catch(Exception ex)
+            {
+                System.out.println("Error In Delete : " + ex);
+                System.in.read();
+            }
+        }
+        else
+        {
+            System.out.println("Please Connect to Database.");
+            System.in.read();
+        }
+    }
 }
 
 
 public class Ass1 {
     public static void main(String[] args) throws IOException {
+        
         Database Database = new Database();
         Crud Crud = new Crud();
         
@@ -243,11 +333,11 @@ public class Ass1 {
                     break;
                 
                 case 4 :
-                    System.out.println(Database.database);
+                    Crud.Update();
                     break;
              
                 case 5 :
-                    System.out.println(Database.IsChecked);
+                    Crud.Delete();
                     break;
                     
                 case 6 :
