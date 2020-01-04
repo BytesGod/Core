@@ -11,6 +11,7 @@ class Database
     public static int port;
     public static String database;
     public static boolean IsChecked = false;
+    public static boolean IsLogin = false;
     
     public void CreateDatabase() throws IOException
     {
@@ -44,15 +45,56 @@ class Database
                 System.out.println("Creating table now.");
                 
                 String query2 = "create table if not exists `student` (`ID` int(3) not null,`Name` varchar(50) not null)";
+                String query3 = "create table if not exists `login` (`ID` int(3) not null,`Username` varchar(50) not null, `Password` varchar(50) not null)";
                 
                 con = DriverManager.getConnection(DbUrl2,Username,Password);
                 
-                try(PreparedStatement st2 = con.prepareStatement(query2);)
+                try(PreparedStatement st2 = con.prepareStatement(query2);
+                        PreparedStatement st3 = con.prepareStatement(query3);)
                 {
                     st2.executeUpdate();
+                    st3.executeUpdate();
                     
                     st2.close();
-                    con.close();
+                    st3.close();
+                    
+                    String query4 = "insert into login values(?,?,?)";
+        
+                    int id;
+                    String username;
+                    String password;
+                    Scanner take2 = new Scanner(System.in);
+                    Scanner take3 = new Scanner(System.in);
+                    Scanner take4 = new Scanner(System.in);
+        
+                    System.out.println("Please enter the ID : ");
+                    id = take4.nextInt();
+                    System.out.println("Plase enter Username : ");
+                    username = take2.nextLine();
+                    System.out.println("Plase enter Password : ");
+                    password = take3.nextLine();
+        
+                    try(PreparedStatement st4 = con.prepareStatement(query4);)
+                    {
+                        st4.setInt(1,id);
+                        st4.setString(2, username);
+                        st4.setString(3, password);
+                        int count = st4.executeUpdate();
+            
+                        if(count > 0)
+                        {
+                            System.out.println(count + " row/s affected Inserted Successfully.");
+                            IsLogin = true;
+                        }   
+                        st4.close();
+                        con.close();
+                        System.in.read();
+                    }
+                    catch(Exception ex)
+                    {
+                        System.out.println("Error In Insert login: " + ex);
+                        System.in.read();
+                }
                     
                     System.out.println("Table created.");
                     IsChecked = true;
@@ -79,6 +121,8 @@ class Database
         try
         {
             Scanner take = new Scanner(System.in);
+            Scanner take2 = new Scanner(System.in);
+            Scanner take3 = new Scanner(System.in);
             
             System.out.println("Please enter port number : ");
             port = take.nextInt();
@@ -89,11 +133,52 @@ class Database
             String DbUrl = "jdbc:mysql://localhost:" + port + "/" + database;
             String Username = "root";
             String Password = "";
+            String user,pass,u=null,p=null;
+            System.out.println("Please enter Username : ");
+            user = take.next();
+            System.out.println("Please enter Password : ");
+            pass = take.next();
             
             con = DriverManager.getConnection(DbUrl,Username,Password);
-            System.out.println("Connected to Database.");
-            IsChecked = true;
-            System.in.read();
+            
+            String query = "select Username,Password from login";
+        
+            try (Statement st = con.createStatement()) 
+            {
+                ResultSet rs = st.executeQuery(query);
+                while(rs.next())
+                {
+                     u = rs.getString("Username");
+                     p = rs.getString("Password");
+                }
+                
+                if(user.equals(u) && pass.equals(p))
+                {
+                    IsLogin = true;
+                    IsChecked = true;
+                }
+                else
+                {
+                    System.out.println("Invalid Username or password.");
+                    System.in.read();
+                    IsChecked = false;
+                }
+                st.close();
+                con.close();
+                System.in.read();
+            }
+            catch(Exception ex)
+            {
+                
+                System.out.println("Error In Login : " + ex);
+                System.in.read();
+            }
+            
+            if(IsChecked == true)
+            {
+                System.out.println("Connected to Database.");
+                System.in.read();
+            }
         }
         catch(SQLException ex)
         {
