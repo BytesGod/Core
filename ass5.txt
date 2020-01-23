@@ -1,0 +1,143 @@
+/*
+Name : Patil Utkarsh
+Class : TY BSc CS Sem-6
+Div : A
+Faculty Name : Shripal sir
+PC No : SRKI-048
+Enrollment No : E17111920310101
+Subject : Android Studio
+Data : 23/01/2020
+Assignment : 4
+Program : Add or Remove List Data from List
+*/
+
+
+activity_main.xml
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter List : "
+        android:textSize="20dp"/>
+
+    <EditText
+
+
+        android:id="@+id/text1"
+        android:layout_width="358dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="26dp"
+        android:hint="Enter the name"/>
+
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Add"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.297"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.985" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="Remove"
+        android:text="Remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.721"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.985" />
+
+
+    <ListView
+        android:id="@+id/lst1"
+        android:layout_width="367dp"
+        android:layout_height="547dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.586" />
+
+
+</LinearLayout>
+
+
+
+
+MainActivity.java
+
+
+package com.example.ass4;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText txt;
+    ListView ls;
+    Button add;
+    ArrayList<String> arr;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        txt=(EditText) findViewById(R.id.text1);
+        ls=(ListView) findViewById(R.id.lst1);
+        arr=new ArrayList<>();
+    }
+
+    public void Add(View view)
+    {
+        arr.add(txt.getText().toString());
+        ArrayAdapter<String> adp=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arr );
+        ls.setAdapter(adp);
+    }
+
+
+    public void Remove(View view) {
+        arr.remove(txt.getText().toString());
+        ArrayAdapter<String> adp = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arr);
+        ls.setAdapter(adp);
+    }
+}
+
+
+
